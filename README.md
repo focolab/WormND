@@ -8,7 +8,7 @@ Code for reproducing results and figures for the WormND benchmark paper.
 ### CRF_ID
   Matlab code for CRF_ID is provided as a submodule. To learn about details of the method, please read the published paper (https://elifesciences.org/articles/60321). To learn about details of how to run the code in general, please read the readme document inside the CRF_ID folder.
 
-For producing results in the WormND benchmark paper, the following files have been used:
+To produce results in the WormND benchmark paper, the following files have been used:
 - Command script:
     - “command_script_neuroPAL.m” in “Main” folder for running the functions 
 - New atlases: 
