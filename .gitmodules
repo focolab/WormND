@@ -1,0 +1,3 @@
+[submodule "CRF_Cell-ID"]
+	path = CRF_Cell-ID
+	url = https://github.com/lu-lab/CRF_Cell-ID.git
