@@ -1,0 +1,110 @@
+,neuron_class,ganglion
+0,BAG,Anterior Ganglion
+1,CEPV,Anterior Ganglion
+2,IL1,Anterior Ganglion
+3,IL1D,Anterior Ganglion
+4,IL1V,Anterior Ganglion
+5,IL2,Anterior Ganglion
+6,IL2D,Anterior Ganglion
+7,IL2V,Anterior Ganglion
+8,OLL,Anterior Ganglion
+9,OLQD,Anterior Ganglion
+10,OLQV,Anterior Ganglion
+11,RIP,Anterior Ganglion
+12,RME,Anterior Ganglion
+13,RMED,Anterior Ganglion
+14,RMEV,Anterior Ganglion
+15,URAD,Anterior Ganglion
+16,URAV,Anterior Ganglion
+17,URB,Anterior Ganglion
+18,URYD,Anterior Ganglion
+19,URYV,Anterior Ganglion
+20,I1,Anterior Pharyngeal Bulb
+21,I2,Anterior Pharyngeal Bulb
+22,I3,Anterior Pharyngeal Bulb
+23,M3,Anterior Pharyngeal Bulb
+24,M4,Anterior Pharyngeal Bulb
+25,MC,Anterior Pharyngeal Bulb
+26,MI,Anterior Pharyngeal Bulb
+27,NSM,Anterior Pharyngeal Bulb
+28,ALA,Dorsal Ganglion
+29,CEPD,Dorsal Ganglion
+30,RID,Dorsal Ganglion
+31,URX,Dorsal Ganglion
+32,ADA,Lateral Ganglion
+33,ADE,Lateral Ganglion
+34,ADF,Lateral Ganglion
+35,ADL,Lateral Ganglion
+36,AFD,Lateral Ganglion
+37,AIB,Lateral Ganglion
+38,AIN,Lateral Ganglion
+39,AIZ,Lateral Ganglion
+40,AQR,Lateral Ganglion
+41,ASE,Lateral Ganglion
+42,ASG,Lateral Ganglion
+43,ASH,Lateral Ganglion
+44,ASI,Lateral Ganglion
+45,ASJ,Lateral Ganglion
+46,ASK,Lateral Ganglion
+47,AUA,Lateral Ganglion
+48,AVA,Lateral Ganglion
+49,AVB,Lateral Ganglion
+50,AVD,Lateral Ganglion
+51,AVE,Lateral Ganglion
+52,AVH,Lateral Ganglion
+53,AVJ,Lateral Ganglion
+54,AWA,Lateral Ganglion
+55,AWB,Lateral Ganglion
+56,AWC,Lateral Ganglion
+57,FLP,Lateral Ganglion
+58,RIA,Lateral Ganglion
+59,RIB,Lateral Ganglion
+60,RIC,Lateral Ganglion
+61,RIM,Lateral Ganglion
+62,RIV,Lateral Ganglion
+63,RMD,Lateral Ganglion
+64,RMDV,Lateral Ganglion
+65,RMG,Lateral Ganglion
+66,SAAV,Lateral Ganglion
+67,SIBD,Lateral Ganglion
+68,SMDV,Lateral Ganglion
+69,AIA,Ventral Ganglion
+70,AIM,Ventral Ganglion
+71,AIY,Ventral Ganglion
+72,AVK,Ventral Ganglion
+73,AVL,Ventral Ganglion
+74,RIH,Ventral Ganglion
+75,RIR,Ventral Ganglion
+76,RIS,Ventral Ganglion
+77,RMDD,Ventral Ganglion
+78,RMF,Ventral Ganglion
+79,RMH,Ventral Ganglion
+80,SAAD,Ventral Ganglion
+81,SIAD,Ventral Ganglion
+82,SIAV,Ventral Ganglion
+83,SIBV,Ventral Ganglion
+84,SMBD,Ventral Ganglion
+85,SMBV,Ventral Ganglion
+86,SMDD,Ventral Ganglion
+87,I4,Posterior Pharyngeal Bulb
+88,I5,Posterior Pharyngeal Bulb
+89,I6,Posterior Pharyngeal Bulb
+90,M1,Posterior Pharyngeal Bulb
+91,M2,Posterior Pharyngeal Bulb
+92,M5,Posterior Pharyngeal Bulb
+93,AS1,Retro Vesicular Ganglion
+94,AVF,Retro Vesicular Ganglion
+95,AVG,Retro Vesicular Ganglion
+96,DA1,Retro Vesicular Ganglion
+97,DB1,Retro Vesicular Ganglion
+98,DB2,Retro Vesicular Ganglion
+99,DD1,Retro Vesicular Ganglion
+100,RIF,Retro Vesicular Ganglion
+101,RIG,Retro Vesicular Ganglion
+102,SABD,Retro Vesicular Ganglion
+103,SABV,Retro Vesicular Ganglion
+104,VA1,Retro Vesicular Ganglion
+105,VB1,Retro Vesicular Ganglion
+106,VB2,Retro Vesicular Ganglion
+107,VD1,Retro Vesicular Ganglion
+108,VD2,Retro Vesicular Ganglion
