@@ -7,9 +7,11 @@ Note that the package requirements should be listed in each submodule, but you m
 
 ## Task 1: Neuron center detection 
 
+In this task, we will take NeuroPAL image as input, and predicts the location of each neuron. We evaluated two classical models for cell segmentation tasks, cellpose and micro-SAM (from Segment Anything). To run the code, please first download the data, preprocess it with preprocess.py, and then run inference.py and evaluate.py in the folder for each individual model. 
+
 ## Task 2: NeuroPAL neuron identification
 
-ID_benchmark.ipynb contains the code for running the analyses presente din the benchmark paper once results have been produced from each model.
+ID_benchmark.ipynb contains the code for running the analyses presented in the benchmark paper once results have been produced from each model.
 
 ### CPD
   We use the implementation of coherent point drift used in the fDNC paper (https://elifesciences.org/articles/66410). This code can be found in the fDNC_neuron_ID submodule included here.  
