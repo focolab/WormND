@@ -1,0 +1,9 @@
+[submodule "models/CellSeg3d"]
+	path = models/CellSeg3d
+	url = https://github.com/AdaptiveMotorControlLab/CellSeg3d.git
+[submodule "models/cellpose"]
+	path = models/cellpose
+	url = https://github.com/MouseLand/cellpose.git
+[submodule "models/micro-sam"]
+	path = models/micro-sam
+	url = https://github.com/computational-cell-analytics/micro-sam.git

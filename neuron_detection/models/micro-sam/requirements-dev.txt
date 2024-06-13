@@ -1,0 +1,10 @@
+build
+coverage
+line-profiler
+pdoc
+pytest
+pytest-cov
+pytest-qt
+snakeviz
+tabulate
+twine
