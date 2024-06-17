@@ -456,7 +456,6 @@ def main(data_directory):
     dataset_id_list = sorted(dataset_id2xyres.keys())
     print(dataset_id_list)
 
-    print(f'{data_directory}/*/*.h5')
     h5_filenames = glob(f'{data_directory}/*/*.h5')
     print(h5_filenames)
 
