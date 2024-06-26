@@ -29,7 +29,15 @@ def visualize(image, mask, saved_path):
 def cell_diameter_in_pixels(voxel_size, cell_diameter_um):
     average_voxel_size = (voxel_size[0] + voxel_size[1] + voxel_size[2]) / 3
     cell_diameter_pixels = cell_diameter_um / average_voxel_size
-    return cell_diameter_pixels
+    return cell_diameter_pixels 
+
+def detect_anomaly(masks, threshold=1000):
+    for mask in masks:
+        n_instances = np.unique(mask).shape[0]
+        if n_instances > threshold:
+            print(n_instances)
+            return True
+    return False
 
 if __name__ == "__main__":
     project_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../'))
@@ -56,16 +64,20 @@ if __name__ == "__main__":
         nwb = NWB_data(label_file_path)
         print(nwb.scale)
 
-        diameter = cell_diameter_in_pixels(nwb.scale, cell_diameter_um=12)
+        diameter = cell_diameter_in_pixels(nwb.scale, cell_diameter_um=10)
         print(nwb.scale, diameter, int(diameter))
-
+        
         imgs = [imread(f) for f in files]
         nimg = len(imgs)
 
         # you can specify cell diameter and channels for your own dataset
         model = models.Cellpose(gpu=True, model_type='cyto3')
-        masks, flows, styles, diams = model.eval(imgs, diameter=diameter, channels=[[0, 0]], do_3D=True)
+        masks, flows, styles, diams = model.eval(imgs, diameter=int(diameter), channels=[0, 0], do_3D=True, anisotropy=nwb.scale[2]/nwb.scale[0])
         
+        if detect_anomaly(masks):
+            print("WARNINGS: too many segmented instances detected, fallback to default parameters")
+            masks, flows, styles, diams = model.eval(imgs, channels=[0, 0], do_3D=True)
+
         for i in range(len(imgs)):
             file = os.path.basename(files[i])
             saved_path = os.path.join(output_folder_path, os.path.splitext(file)[0]+'.png')

@@ -5,6 +5,8 @@ from scipy.ndimage import center_of_mass
 import sys
 import matplotlib.pyplot as plt
 import pandas as pd
+import cv2
+from matplotlib_scalebar.scalebar import ScaleBar
 
 
 def get_dist_threshold(gt_cells, scales):
@@ -32,11 +34,6 @@ def evaluate(predicted_cell, gt_cell, threshold=15):
 
     return precision, recall, f1 score
     """
-    if len(predicted_cell) > 5000:
-        print("WARNINGS: too much cell detected, automatically sampled for efficiency")
-        random_indices = np.random.choice(predicted_cell.shape[0], len(gt_cell), replace=False)
-        predicted_cell = predicted_cell[random_indices]
-
     dist = cdist(predicted_cell, gt_cell, metric='euclidean')
     n_pred, n_gt = dist.shape
     assert(n_pred != 0 and n_gt != 0)
@@ -88,13 +85,62 @@ def visualize_labels(image, mask, predicted_cell, gt_cell, results_path):
     plt.close()
 
 
+def visualize_labels_figure(image, mask, predicted_cell, gt_cell, results_path, threshold=6):
+    fig, axs = plt.subplots(nrows=1, ncols=3)
+    axs[0].imshow(np.max(image, axis=2))
+    axs[0].scatter(gt_cell[:, 1], gt_cell[:, 0], s=2, alpha=0.5, c='white', marker='x')
+
+    axs[1].imshow(np.max(mask, axis=0))
+    
+    # predicted_cell = predicted_cell[np.abs(predicted_cell[:, 2] - z) <= 0.5]
+    # gt_cell = gt_cell[gt_cell[:, 2] == z]
+
+    axs[2].imshow(np.max(image, axis=2))
+
+    dist = cdist(predicted_cell, gt_cell, metric='euclidean')
+    n_pred, n_gt = dist.shape
+
+    bool_mask = (dist <= threshold)
+    tp, fp, fn = [], [], []
+    matched_gt_indices = set()
+
+    for i in range(len(predicted_cell)):
+        neighbors = bool_mask[i].nonzero()[0]
+
+        if len(neighbors) == 0:
+            fp.append(predicted_cell[i])
+        else:
+            gt_idx = min(neighbors, key=lambda j: dist[i, j])
+            tp.append(predicted_cell[i])
+            matched_gt_indices.add(gt_idx)
+            bool_mask[:, gt_idx] = False
+
+    for j in range(len(gt_cell)):
+        if j not in matched_gt_indices:
+            fn.append(gt_cell[j])
+
+    tp = np.array(tp)
+    fp = np.array(fp)
+    fn = np.array(fn)
+
+    axs[2].scatter(tp[:, 1], tp[:, 0], s=3, alpha=0.5, c='white')
+    axs[2].scatter(fp[:, 1], fp[:, 0], s=3, alpha=0.5, c='red')
+    axs[2].scatter(fn[:, 1], fn[:, 0], s=3, alpha=0.5, c='yellow')
+    axs[0].axis('off')
+    axs[1].axis('off')
+    axs[2].axis('off')
+
+    plt.savefig(results_path, dpi=300)
+    plt.close()
+    exit()
+
 if __name__ == "__main__":
     project_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../'))
     sys.path.append(project_dir)
     from NWB_data import NWB_data
 
     sessions = ['000541', '000472', '000692', '000715']
-    dist_threshold = 6
+    dist_threshold = 3
 
     for session in sessions:
         label_folder_path = f"/scratch/th3129/wormID/datasets/{session}"
@@ -123,6 +169,7 @@ if __name__ == "__main__":
 
                         metrics.append({'worm':os.path.splitext(file)[0], 'precision': precision, 'recall': recall, 'f1_score': f1})
                         save_path = os.path.join(results_folder_path, os.path.splitext(file)[0]+'_masks.png')
+                        results_path = os.path.join(results_folder_path, os.path.splitext(file)[0]+'_masks_figure.png')
                         visualize_labels(RGB, mask, pred_labels, gt_labels, save_path)
         
         df = pd.DataFrame(metrics)

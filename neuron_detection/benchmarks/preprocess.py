@@ -50,6 +50,12 @@ def visualize_image_mask(image, gt_cell, path, scatter=False):
     plt.savefig(path, dpi=300)
     plt.close()
 
+def visualize_y_projection(image, path):
+    fig, axs = plt.subplots(nrows=1, ncols=1)
+    axs.imshow(np.max(image, axis=1), aspect='auto', interpolation='nearest')
+    plt.savefig(path, dpi=300)
+    plt.close()
+
 
 def visualize_image_points(image, gt_cell, path):
     fig, ax = plt.subplots()
@@ -61,7 +67,7 @@ def visualize_image_points(image, gt_cell, path):
     plt.close()
 
 if __name__ == "__main__": 
-    sessions = ['000472', '000692', '000715']
+    sessions = ['000541', '000472', '000692', '000715']
 
     for session in sessions:
         input_folder_path = f"/scratch/th3129/wormID/datasets/{session}" 
