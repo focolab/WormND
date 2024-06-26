@@ -7,7 +7,12 @@ Note that the package requirements should be listed in each submodule, but you m
 
 ## Task 1: Neuron center detection 
 
-In this task, we will take NeuroPAL image as input, and predicts the location of each neuron. We evaluated two classical models for cell segmentation tasks, cellpose and micro-SAM (from Segment Anything). To run the code, please first download the data, preprocess it with preprocess.py, and then run inference.py and evaluate.py in the folder for each individual model. 
+In this task, we will take NeuroPAL image as input, and predicts the location of each neuron. We evaluated two classical models for cell segmentation tasks, cellpose and micro-SAM (from Segment Anything). To run the code, please do the following step
+
+1. download the data from [wormid website](https://www.wormid.org/datasets) to store in neuron_detection/datasets
+2. preprocess it with preprocess.py
+3. run inference.py and evaluate.py on preprocessed data in the folder for each individual model
+4. aggregate the results with evaluate.py in neuron_detection/datasets
 
 ## Task 2: NeuroPAL neuron identification
 
