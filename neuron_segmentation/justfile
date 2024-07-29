@@ -1,0 +1,86 @@
+set export
+LD_PRELOAD := "/usr/lib/libdrm_amdgpu.so.1"
+LD_LIBRARY_PATH := env_var("LD_LIBRARY_PATH") + ":/mmfs1/data/adhinart/mambaforge/envs/track/lib/python3.9/site-packages/tensorrt_libs"
+XLA_FLAGS := "--xla_gpu_cuda_data_dir=/cm/shared/apps/cuda11.2/toolkit/11.2.2"
+# tensorflow-2.11.0
+# module load cuda11.2
+# module load cudnn8.1-cuda11.2
+
+
+default:
+    just --list
+
+viewer:
+    python viewer.py
+
+test:
+    python test.py
+
+check:
+    python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
+
+export_inference:
+    python inference.py --export_inference
+
+inference:
+    python inference.py --inference
+
+parallel_inference_0:
+    CUDA_VISIBLE_DEVICES=0 python inference.py --parallel_inference
+
+parallel_inference_1:
+    CUDA_VISIBLE_DEVICES=1 python inference.py --parallel_inference
+
+parallel_inference_2:
+    CUDA_VISIBLE_DEVICES=2 python inference.py --parallel_inference
+
+parallel_inference_3:
+    CUDA_VISIBLE_DEVICES=3 python inference.py --parallel_inference
+
+tracking:
+    python inference.py --tracking
+
+parallel_tracking_0:
+    CUDA_VISIBLE_DEVICES=0 python inference.py --parallel_tracking
+
+parallel_tracking_1:
+    CUDA_VISIBLE_DEVICES=1 python inference.py --parallel_tracking
+
+parallel_tracking_2:
+    CUDA_VISIBLE_DEVICES=2 python inference.py --parallel_tracking
+
+parallel_tracking_3:
+    CUDA_VISIBLE_DEVICES=3 python inference.py --parallel_tracking
+
+metrics:
+    python inference.py --metrics
+
+train_0:
+    CUDA_VISIBLE_DEVICES=0 python inference.py --train --fold 0
+
+train_1:
+    CUDA_VISIBLE_DEVICES=1 python inference.py --train --fold 1
+
+train_2:
+    CUDA_VISIBLE_DEVICES=2 python inference.py --train --fold 2
+
+train_3:
+    CUDA_VISIBLE_DEVICES=3 python inference.py --train --fold 3
+
+train_4:
+    CUDA_VISIBLE_DEVICES=0 python inference.py --train --fold 4
+
+optimize_thresholds_0:
+    CUDA_VISIBLE_DEVICES=0 python inference.py --optimize_thresholds --fold 0
+
+optimize_thresholds_1:
+    CUDA_VISIBLE_DEVICES=1 python inference.py --optimize_thresholds --fold 1
+
+optimize_thresholds_2:
+    CUDA_VISIBLE_DEVICES=2 python inference.py --optimize_thresholds --fold 2
+
+optimize_thresholds_3:
+    CUDA_VISIBLE_DEVICES=3 python inference.py --optimize_thresholds --fold 3
+
+optimize_thresholds_4:
+    CUDA_VISIBLE_DEVICES=0 python inference.py --optimize_thresholds --fold 4

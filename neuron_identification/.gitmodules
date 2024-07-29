@@ -1,0 +1,9 @@
+[submodule "CRF_Cell-ID"]
+	path = CRF_Cell-ID
+	url = https://github.com/lu-lab/CRF_Cell-ID.git
+[submodule "NWBelegans"]
+	path = NWBelegans
+	url = git@github.com:focolab/NWBelegans.git
+[submodule "fDNC_Neuron_ID"]
+	path = fDNC_Neuron_ID
+	url = git@github.com:XinweiYu/fDNC_Neuron_ID.git
