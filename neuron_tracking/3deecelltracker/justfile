@@ -19,6 +19,9 @@ dataloader:
 check:
     python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
 
+export_training:
+    python inference.py --export_training
+
 export_inference:
     python inference.py --export_inference
 
