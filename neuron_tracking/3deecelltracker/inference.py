@@ -2,7 +2,7 @@ import os
 import glob
 import warnings
 import numpy as np
-from test import SampleData
+from dataloader import SampleData
 from tqdm import tqdm
 import pandas as pd
 import argparse

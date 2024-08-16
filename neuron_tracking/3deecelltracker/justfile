@@ -13,8 +13,8 @@ default:
 viewer:
     python viewer.py
 
-test:
-    python test.py
+dataloader:
+    python dataloader.py
 
 check:
     python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
