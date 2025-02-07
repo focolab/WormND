@@ -68,8 +68,8 @@ if __name__ == "__main__":
 
     for model in models:
         for dist in dists:
-            results_folder_path = f"/scratch/th3129/wormID/results/{model}"
-            split_file_path = "/scratch/th3129/wormID/datasets/dataset_split.csv"
+            results_folder_path = f"/scratch/th3129/WormND/neuron_detection/results/{model}"
+            split_file_path = "/scratch/th3129/WormND/neuron_detection/datasets/dataset_split.csv"
             dfs = []
             print(model, " dist = ", dist)
 
