@@ -10,15 +10,17 @@ def extract_parts(path):
     part2 = parts[2].split('.')[0]
     return part1, part2
 
-def cross_validated_result(results_df, split_file_path):
+def cross_validated_result(results_df, split_file_path, split_by_lab=True):
     split_file = pd.read_csv(split_file_path)
     split_file[['session', 'worm']] = split_file['filename'].apply(lambda x: pd.Series(extract_parts(x)))
 
+    dataset_split = 'split_by_lab' if split_by_lab else 'dataset_split'
     merged_df = pd.merge(results_df, split_file, on=['session', 'worm'])
-    merged_df = merged_df[['worm', 'precision', 'recall', 'f1_score', 'dataset_split']]
-    merged_df['dataset_split'].astype(int)
+    merged_df = merged_df[merged_df['use_for_id_task'] == 1]
+    merged_df = merged_df[['worm', 'precision', 'recall', 'f1_score', dataset_split]]
+    merged_df[dataset_split].astype(int)
 
-    agg_df = merged_df.groupby(by=['dataset_split'])[['precision', 'recall', 'f1_score']].mean().reset_index()
+    agg_df = merged_df.groupby(by=[dataset_split])[['precision', 'recall', 'f1_score']].mean().reset_index()
     return agg_df
     
 
@@ -83,10 +85,10 @@ if __name__ == "__main__":
                             dfs.append(df)
 
             result = pd.concat(dfs, axis=0)
-            excluded_sessions = ['000565', '000714', '000776']
+            excluded_sessions = []
             result = result[~result['session'].isin(excluded_sessions)]
 
-            agg_df = cross_validated_result(result, split_file_path)
+            agg_df = cross_validated_result(result, split_file_path, split_by_lab=False)
             print("mean", agg_df['precision'].mean(), agg_df['recall'].mean(), agg_df['f1_score'].mean())
             print("std", agg_df['precision'].std(), agg_df['recall'].std(), agg_df['f1_score'].std())
             print()

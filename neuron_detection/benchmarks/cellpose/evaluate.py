@@ -130,22 +130,61 @@ def visualize_labels_figure(image, mask, predicted_cell, gt_cell, results_path, 
     axs[1].axis('off')
     axs[2].axis('off')
 
+    add_manual_scale_bar(axs[2], bar_length_px=740, bar_height_px=10, bar_color='white', bar_text='20 µm', bar_text_color='white')
+
     plt.savefig(results_path, dpi=300)
     plt.close()
     exit()
+
+def add_manual_scale_bar(ax, bar_length_px, bar_height_px, bar_color, bar_text, bar_text_color, location='lower right', padding=10):
+    # Get the dimensions of the image
+    y_lim = ax.get_ylim()
+    x_lim = ax.get_xlim()
+    
+    # Calculate the position of the scale bar
+    if location == 'lower right':
+        x_start = x_lim[1] - bar_length_px - padding
+        y_start = y_lim[0] + padding
+    elif location == 'lower left':
+        x_start = x_lim[0] + padding
+        y_start = y_lim[0] + padding
+    elif location == 'upper right':
+        x_start = x_lim[1] - bar_length_px - padding
+        y_start = y_lim[1] - bar_height_px - padding
+    elif location == 'upper left':
+        x_start = x_lim[0] + padding
+        y_start = y_lim[1] - bar_height_px - padding
+    else:
+        raise ValueError("Invalid location argument. Choose from 'lower right', 'lower left', 'upper right', 'upper left'.")
+
+   # Draw the scale bar
+    rect = plt.Rectangle((x_start, y_start), bar_length_px, bar_height_px, linewidth=1, edgecolor=bar_color, facecolor=bar_color)
+    ax.add_patch(rect)
+    
+    # Add the text label
+    ax.text(x_start + bar_length_px / 2, y_start - bar_height_px - padding, bar_text, color=bar_text_color,
+            ha='center', va='top', fontsize=10)
+
+def get_color(RGB, pred_labels):
+    pred_labels = pred_labels.astype(int)
+    colors = np.zeros((len(pred_labels), 3))
+    for i in range(len(pred_labels)):
+        colors[i] = RGB[pred_labels[i][0], pred_labels[i][1], pred_labels[i][2]]
+    return colors
 
 if __name__ == "__main__":
     project_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../'))
     sys.path.append(project_dir)
     from NWB_data import NWB_data
 
-    sessions = ['000541', '000472', '000692', '000715']
-    dist_threshold = 3
+    sessions = ['000541','000472','000692','000715', '000714','000776', '000565']
+    dist_threshold = 6
 
     for session in sessions:
         label_folder_path = f"/scratch/th3129/wormID/datasets/{session}"
         results_folder_path = f"/scratch/th3129/wormID/results/cellpose/{session}"
         metrics = []
+        pred = []
 
         for subdir in os.listdir(label_folder_path):
             subdir_path = os.path.join(label_folder_path, subdir)
@@ -162,6 +201,12 @@ if __name__ == "__main__":
 
                         gt_labels = blobs[['x', 'y', 'z']].to_numpy()
                         pred_labels = mask_to_centroids(mask)
+                        colors = get_color(RGB, pred_labels)
+
+                        for i in range(len(pred_labels)):
+                            pred.append({'worm':os.path.splitext(file)[0], 'x': pred_labels[i][0], 
+                                        'y': pred_labels[i][1], 'z': pred_labels[i][2],
+                                        'r': colors[i][0], 'g': colors[i][1], 'b': colors[i][2]})
                         # threshold = get_dist_threshold(gt_labels, nwb.scale)
 
                         precision, recall, f1 = evaluate(pred_labels * nwb.scale, gt_labels * nwb.scale, threshold=dist_threshold)
@@ -174,3 +219,6 @@ if __name__ == "__main__":
         
         df = pd.DataFrame(metrics)
         df.to_csv(os.path.join(results_folder_path, f'performance_metrics_dist{dist_threshold}.csv'), index=False)
+
+        pred_df = pd.DataFrame(pred)
+        pred_df.to_csv(os.path.join(results_folder_path, f'{session}_labels.csv'), index=False)
